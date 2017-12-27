@@ -1,5 +1,4 @@
-class Element(val word: String) {
+class Element(val word: String, val fitness: Float) {
 
-    val fitness: Float = 0f
 
 }

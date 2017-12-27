@@ -48,9 +48,12 @@ class App : JFrame() {
 
         val totalPopulation = 2
         val targetWord = "quest"
-        val genetic = Genetic(targetWord)
+        val genetic = Genetic(totalPopulation, targetWord)
 
-        println(genetic.createInitialPopulation(totalPopulation, targetWord.length.toLong()))
+//        println(genetic.createInitialPopulation(totalPopulation, targetWord.length.toLong()))
+
+
+//        val initialPopulation = genetic.createInitialPopulation(totalPopulation, targetWord.length.toLong())
 
 
 

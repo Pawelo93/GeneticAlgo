@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent
 import javax.swing.JTextArea
 
 
-class App : JFrame() {
+class App : JFrame("Genetic Algo"), Display{
 
     val bigFont = Font("serif", PLAIN, 22)
     val normalFont = Font("serif", PLAIN, 18)
@@ -21,7 +21,7 @@ class App : JFrame() {
 
     init {
 
-        setBounds(300, 150, 600, 600)
+        setBounds(300, 150, 800, 600)
         defaultCloseOperation = EXIT_ON_CLOSE
         isVisible = true
 
@@ -30,13 +30,13 @@ class App : JFrame() {
         bestPhrase.font = bigFont;
 
         allPhrases = JTextArea()
-        allPhrases.setBounds(300, 15, 250, 530)
+        allPhrases.setBounds(300, 15, 550, 530)
         allPhrases.font = normalFont
 
         info = JLabel()
         info.setBounds(20, 320, 300, 100)
         info.font = normalFont
-        setInfo(311, 73, 200, 1)
+//        setInfo(311, 73, 200, 1)
 
         add(bestPhrase)
         add(allPhrases)
@@ -46,9 +46,20 @@ class App : JFrame() {
 
 
 
-        val totalPopulation = 2
-        val targetWord = "quest"
-        val genetic = Genetic(totalPopulation, targetWord)
+        val totalPopulation = 100000
+        val targetWord = "Koniec świata."
+        val mutationRate = 0.05f
+        val genetic = Genetic(this, targetWord, totalPopulation, mutationRate)
+
+
+        val thread = Thread(Runnable {
+            while(!genetic.end) {
+                genetic.nextGeneration()
+                Thread.sleep(3)
+            }
+        })
+
+        thread.start()
 
 //        println(genetic.createInitialPopulation(totalPopulation, targetWord.length.toLong()))
 
@@ -64,20 +75,24 @@ class App : JFrame() {
         bestPhrase.addMouseListener(object: MouseAdapter(){
             override fun mouseClicked(e: MouseEvent?) {
                 super.mouseClicked(e)
-                addToAllPhrases("new")
+
+                genetic.nextGeneration()
             }
         })
     }
 
-    fun setBestPhrase(text: String){
-        bestPhrase.text = "<html>Best phrase: <br> $text</html>"
+    override fun setInfo(totalGenerations: Int, averageFitness: Int, totalPopulation: Int, mutationRate: Float){
+        info.text = "<html>total generations: $totalGenerations<br>" +
+                "average fitness: $averageFitness%<br>" +
+                "total population: $totalPopulation<br>" +
+                "mutation rate: ${mutationRate*100}%"
     }
 
-    fun addToAllPhrases(text: String){
+    override fun showPhrase(text: String) {
         allPhrases.text = ""
         list.add(text)
-//        if(list.size > 20)
-//            list.removeAt(0)
+        if(list.size > 21)
+            list.removeAt(0)
 
         var listInString = ""
         for (s in list.reversed()) {
@@ -86,10 +101,4 @@ class App : JFrame() {
         allPhrases.text += "All phrases \n$listInString"
     }
 
-    fun setInfo(totalGenerations: Int, averageFitness: Int, totalPopulation: Int, mutationRate: Int){
-        info.text = "<html>total generations: $totalGenerations<br>" +
-                "average fitness: $averageFitness%<br>" +
-                "total population: $totalPopulation<br>" +
-                "mutation rate: $mutationRate%"
-    }
 }

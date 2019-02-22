@@ -47,7 +47,7 @@ class App : JFrame("Genetic Algo"), Display{
 
 
         val totalPopulation = 100000
-        val targetWord = "Koniec świata."
+        val targetWord = "Koniec  ."
         val mutationRate = 0.05f
         val genetic = Genetic(this, targetWord, totalPopulation, mutationRate)
 

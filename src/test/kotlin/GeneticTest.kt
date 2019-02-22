@@ -14,22 +14,31 @@ class GeneticTest {
     fun calculateFitness(){
         var targetWord = "ab"
         var element = "aa"
-        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
-        assertEquals(0.5f, genetic.calculateFitnessForElement(element))
+//        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
+//        assertEquals(0.5f, genetic.calculateFitnessForElement(element))
+//
+//        targetWord = "abc"
+//        element = "aba"
+//        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
+//        assertEquals(2/3.toFloat(), genetic.calculateFitnessForElement(element))
+//
+//        targetWord = "abcd"
+//        element = "adcy"
+//        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
+//        assertEquals(0.625f, genetic.calculateFitnessForElement(element))
 
-        targetWord = "abc"
-        element = "aba"
+        targetWord = "aca"
+        element = "caa"
+        // aabb
+        // beea
         genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
         assertEquals(2/3.toFloat(), genetic.calculateFitnessForElement(element))
 
-        targetWord = "abcd"
-        element = "adcy"
-        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
-        assertEquals(0.625f, genetic.calculateFitnessForElement(element))
-
-        targetWord = "aaabbb"
-        element = "abeeba"
-        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
-        assertEquals(0.5f, genetic.calculateFitnessForElement(element))
+//        targetWord = "aaabbb"
+//        element = "abeeba"
+//        // aabb
+//        // beea
+//        genetic = Genetic(null, targetWord, totalPopulation, mutationRate)
+//        assertEquals(0.5f, genetic.calculateFitnessForElement(element))
     }
 }

@@ -115,17 +115,35 @@ class Genetic(val display: Display?, val target: String, val totalPopulation: In
 
 
         // full point for every good letter
-        var neddedLetters = ""
+        var neededLetters = ""
         var notUsedLetters = ""
         for ((index, letter) in target.withIndex()) {
             if (element[index] == letter) {
                 points += 1.toFloat() / target.length
             }else {
-                neddedLetters += letter
+                neededLetters += letter
                 notUsedLetters += element[index]
             }
         }
 
+
+        while(matchingLetters(neededLetters, notUsedLetters)){
+            first@for ((index, c) in neededLetters.withIndex()) {
+                for ((index2, c2) in notUsedLetters.withIndex()) {
+                    println("index $index c $c    index $index2 c2 $c2")
+                    if(c == c2) {
+                        points += 0.5f / target.length
+                        neededLetters = neededLetters.substring(index, index + 1)
+                        notUsedLetters = notUsedLetters.substring(index, index + 1)
+                        break@first;
+
+                    }
+                }
+            }
+
+
+
+        }
 
         // half point if letter is nedded in sentence
 //        for (neddedLetter in neddedLetters) {
@@ -153,6 +171,16 @@ class Genetic(val display: Display?, val target: String, val totalPopulation: In
 //        }
 
         return points
+    }
+
+    private fun matchingLetters(target: String, input: String): Boolean {
+        for ((index, c) in target.withIndex()) {
+            for (c2 in input) {
+                if(c == c2)
+                    return true
+            }
+        }
+        return false
     }
 
     var all = 0
